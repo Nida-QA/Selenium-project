@@ -4,10 +4,10 @@ This README would normally document whatever steps are necessary to get your app
 
 ### What is this repository for? ###
 
-* Cucumber Based Automation Framework for Web, Android and IOS application.
+* Cucumber Based Automation Framework for Web.
 
 ### Prepared By: ###
 
-* Name: Muhammad.
-* Email: muhammad.jamshed@systemsltd.com
-* Ph No: (+92) 31-3787974
+* Name: Muhammad Waqar Tufail.
+* Email: samar4250@gmail.com
+* Ph No: (+92) 334-360 9679
