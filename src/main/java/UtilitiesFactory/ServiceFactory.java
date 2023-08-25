@@ -64,8 +64,10 @@ public class ServiceFactory {
                 break;
 
             case "CHROME":
+                System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver-win64/chromedriver.exe");
+//                driver = new ChromeDriver(chromeOptions_desktop());
 //                WebDriverManager.chromedriver().proxy("https://chromedriver.storage.googleapis.com:443").setup();
-                WebDriverManager.chromedriver().setup();
+//                WebDriverManager.chromedriver().setup();
                 driver.set(new ChromeDriver(chromeOptions_desktop()));
                 break;
 
@@ -183,11 +185,9 @@ public class ServiceFactory {
 
         return edgeOptions;
     }
-
     public void setBrowser(String browser){
         BROWSER = browser;
     }
-
     public String getBrowser(){
         return BROWSER;
     }
@@ -197,12 +197,12 @@ public class ServiceFactory {
     public static void setRequest(RequestSpecification requestSpecificationData){
         request = requestSpecificationData;
     }
-
     public static void setResponse(Response responseData){
         response = responseData;
     }
     public static void setParams(JSONObject paramsData){
         requestParams = paramsData;
     }
+
 
 }

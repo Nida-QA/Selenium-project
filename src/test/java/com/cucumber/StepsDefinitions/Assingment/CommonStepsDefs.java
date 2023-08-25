@@ -53,18 +53,11 @@ public class CommonStepsDefs extends HarnessVariables {
     @And("User Click on {string} Button on {string} Page")
     public void userClickOnButtonOnPage(String locator, String screenName) throws Exception{
         screenName = commonPage.removeSpaces(screenName);
+        locator=commonPage.removeSpaces(locator);
         locator=commonPage.getpropertyName(locator);
         locator = new PropertyLoaderFactory().getLocatorPropertyFile(screenName+".properties").getProperty(locator);
         commonPage.clickButton(locator,screenName);
     }
-
-    @Then("User Validates {string} Element Not Displayed on {string} Page")
-    public void userValidatesElementNotDisplayedOnPage(String locator, String screenName) throws Exception {
-        screenName = commonPage.removeSpaces(screenName);
-        locator = new PropertyLoaderFactory().getLocatorPropertyFile(screenName+".properties").getProperty(locator);
-        commonPage.checkElementVisibility(locator,screenName,true);
-    }
-
 
     @Then("User Validates {string} of {string} On {string} Page")
     public void userValidatesOfOnPage(String testData, String locator, String screenName) throws Exception {
@@ -75,12 +68,10 @@ public class CommonStepsDefs extends HarnessVariables {
         locator = new PropertyLoaderFactory().getLocatorPropertyFile(screenName+".properties").getProperty(locator);
         commonPage.validateDynamicString(testData,locator ,screenName);
     }
-
-    @And("User Clicks on {string} Button on {string} Page")
-    public void userClicksOnButtonOnPage(String locator, String screenName) throws Exception {
+    @Then("User Validates {string} Element Not Displayed on {string} Page")
+    public void userValidatesElementNotDisplayedOnPage(String locator, String screenName) throws Exception {
         screenName = commonPage.removeSpaces(screenName);
-        locator=commonPage.removeSpaces(locator);
         locator = new PropertyLoaderFactory().getLocatorPropertyFile(screenName+".properties").getProperty(locator);
-        commonPage.JsclickButton(locator,screenName);
+        commonPage.checkElementVisibility(locator,screenName,true);
     }
 }

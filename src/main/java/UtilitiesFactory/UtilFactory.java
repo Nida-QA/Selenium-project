@@ -42,12 +42,13 @@ import static UtilitiesFactory.WaitFactory.staticWait;
 public class UtilFactory {
 
     protected static ElementFactory elementFactory;
-    protected static WaitFactory waitFactory;
+    public static WaitFactory waitFactory;
     private static String envPropFile = "environment.properties";
     public static String ENumPackage = "EnumFactory.Assingment.";
     private static String screenshotFolder;
     public static String reportLocation;
     protected static String deviceName;
+    public static String failureException;
     public static ServiceFactory serviceFactoryInstance = ServiceFactory.getInstance();
     private static ATUTestRecorder recorder;
 
@@ -65,45 +66,16 @@ public class UtilFactory {
     public static String scenarioName;
     public static ExtentTest scenarioDef;
     public static ExtentTest features;
-    public static String failureException;
-
-    public UtilFactory() throws Exception {
-    }
 
     protected void click(String locator){
-        WebElement element = elementFactory.getElement(locator);
-        click(element);
-    }
-
-    protected void click(WebElement element){
         try
         {
+            WebElement element = elementFactory.getElement(locator);
             element.click();
         } catch (Exception e)
         {
             throw e;
         }
-    }
-
-    protected void jsClick(String locatorValue)
-    {
-        WebElement element = elementFactory.getElement(locatorValue);
-        jsClick(element);
-    }
-
-    protected void jsClick(WebElement element)
-    {
-        JavascriptExecutor executor = (JavascriptExecutor) ServiceFactory.getDriver();
-        executor.executeScript("arguments[0].click();", element);
-    }
-    protected void clearField(String locatorValue) throws Exception
-    {
-        WebElement element = elementFactory.getElement(locatorValue);
-        clearField(element);
-    }
-    protected void clearField(WebElement element) throws Exception
-    {
-        element.clear();
     }
 
     protected void enterString(String locatorValue, String fieldValue)
@@ -112,6 +84,12 @@ public class UtilFactory {
         enterString(element,fieldValue);
     }
 
+    protected String getText(String locatorValue)
+    {
+        WebElement element = elementFactory.getElement(locatorValue);
+        String actulValue = element.getText();
+        return actulValue;
+    }
     protected void enterString(WebElement element, String fieldValue)
     {
         element.sendKeys(fieldValue);
@@ -133,22 +111,8 @@ public class UtilFactory {
         }
     }
 
-    protected String getText(String locatorValue)
-    {
-        return getText(elementFactory.getElement(locatorValue));
-    }
-
-    protected String getText(WebElement element)
-    {
-        return element.getText();
-    }
-
     protected void waitForPageLoad(){
         waitFactory.waitForPageToFinishLoading(ServiceFactory.getDriver());
-    }
-
-    protected void customWait(int waitTime){
-        staticWait(waitTime);
     }
 
     public static String getBase64Screenshot() throws IOException {
@@ -182,13 +146,6 @@ public class UtilFactory {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    protected String getCurrentDateWithoutYear() {
-        SimpleDateFormat format = new SimpleDateFormat("M/dd");
-        format.setTimeZone(TimeZone.getTimeZone("Asia/Dubai"));
-        String date = format.format(new Date());
-        return date;
-    }
-
     public static String locatorXpath(String enumClassName, String locator) throws ClassNotFoundException {
         int i = 0;
         String XPath = null;
@@ -198,6 +155,8 @@ public class UtilFactory {
                 Method m = cls.getMethod("getValue", null);
                 XPath = m.invoke(obj, null).toString();
                 if(cls.getEnumConstants()[i].toString().equals(locator)){
+                    cls = null;
+                    m = null;
                     return XPath;
                 }
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {

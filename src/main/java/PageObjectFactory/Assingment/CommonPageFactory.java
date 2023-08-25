@@ -38,13 +38,13 @@ public class CommonPageFactory extends UtilFactory {
                     MediaEntityBuilder.createScreenCaptureFromBase64String(UtilFactory.getBase64Screenshot()).build());
             throw e;
         }
+        locator = null;
     }
 
     public void clickButton(String Locator,String ScreenName) throws Exception {
         String locator = UtilFactory.locatorXpath(ScreenName,Locator);
-        if(Locator.contains("XPATH_APPLY_SHIPPING")){
-            waitFactory.waitForElementToBeClickable(locator);
-            Thread.sleep(10000);
+        if(Locator.equals("XPATH_ADD_TO_CART")){
+            locator = "("+locator+")["+getRandomNumber(1,6)+"]";
         }
         try{
             waitForPageLoad();
@@ -53,30 +53,18 @@ public class CommonPageFactory extends UtilFactory {
             scenarioDef.log(Status.PASS,"Clicked on "+getLocatorNameforLog(Locator)+" Field on "+PageName+" Page.",
                     MediaEntityBuilder.createScreenCaptureFromBase64String(UtilFactory.getBase64Screenshot()).build());
         }catch (Exception e){
-            failureException = e.toString();
+            String failureException = e.toString();
             scenarioDef.log(Status.FAIL,"Could not Click on "+getLocatorNameforLog(Locator)+" Field on "+PageName+" Page.",
                     MediaEntityBuilder.createScreenCaptureFromBase64String(UtilFactory.getBase64Screenshot()).build());
             throw e;
         }
+        locator = null;
     }
-
-    public void JsclickButton(String Locator,String ScreenName) throws Exception {
+    public void checkElementVisibility(String Locator,String ScreenName, boolean visibility) throws Exception {
         String locator = UtilFactory.locatorXpath(ScreenName,Locator);
-//        Specifically for Add To Product Button Dynamically Fetch any Button instead of Static Button
-        if(Locator.equals("XPATH_ADD_TO_CART")){
-            locator = "("+locator+")["+getRandomNumber(1,6)+"]";
-        }
-        try{
-            waitFactory.waitForElementToBeClickable(locator);
-            jsClick(locator);
-            scenarioDef.log(Status.PASS,"Clicked on "+getLocatorNameforLog(Locator)+" Field on "+PageName+" Page.",
-                    MediaEntityBuilder.createScreenCaptureFromBase64String(UtilFactory.getBase64Screenshot()).build());
-        }catch (Exception e){
-            failureException = e.toString();
-            scenarioDef.log(Status.FAIL,"Could not Click on "+getLocatorNameforLog(Locator)+" Field on "+PageName+" Page.",
-                    MediaEntityBuilder.createScreenCaptureFromBase64String(UtilFactory.getBase64Screenshot()).build());
-            throw e;
-        }
+        visibility = UtilFactory.isVisible(locator);
+        Assert.assertEquals(visibility,false);
+        locator = null;
     }
 
     public void validateDynamicString(String expectedValue, String locator, String ScreenName) throws Exception {
@@ -98,11 +86,5 @@ public class CommonPageFactory extends UtilFactory {
             throw e;
         }
 
-    }
-
-    public void checkElementVisibility(String Locator,String ScreenName, boolean visibility) throws Exception {
-        String locator = UtilFactory.locatorXpath(ScreenName,Locator);
-        visibility = UtilFactory.isVisible(locator);
-        Assert.assertEquals(visibility,false);
     }
 }
