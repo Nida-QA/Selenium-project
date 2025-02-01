@@ -14,11 +14,7 @@ This README would normally document whatever steps are necessary to get your app
 * Variables under Locators file should be same mentioned under enum files
 * Test Data Variable should be same under .feature and TestData files mentioned above.
 
-### Prepared By: ###
 
-* Name: Muhammad Waqar Tufail.
-* Email: samar4250@gmail.com
-* Ph No: (+92) 334-360 9679
 
 ### Execution Steps: ###
 * To execute the project, navigate to **"Edit run/Debug configuration"** dropdown then edit the configuration and locate the **testRunner.xml** in TestNG project
